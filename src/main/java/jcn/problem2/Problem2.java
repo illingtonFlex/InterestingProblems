@@ -31,6 +31,8 @@ public class Problem2 {
                 The words list is large (over 170,000 words) Can you also observe and compare the performance of parallel
                 processing vs serial?
 
+                Validate the solution by running the unit test.
+
             */
         }
         catch(Exception e)
