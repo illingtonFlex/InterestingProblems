@@ -22,9 +22,7 @@ public class ProblemTwo {
     @Test
     public void test() {
 
-        Problem2 p2 = new Problem2();
-
-        List<String> actual = p2.generateWordListFromFile();
+        List<String> actual = new Problem2().generateWordListFromFile();
 
         assertThat(actual, is(expected));
     }
