@@ -12,6 +12,7 @@ import static org.junit.Assert.assertThat;
 public class ProblemOne {
 
     private List<Thing> listOfAllThings;
+    private List<Thing> expectedResult;
     private List<String> listOfOrderedStringIds;
 
     @Before
@@ -23,16 +24,16 @@ public class ProblemOne {
 
         listOfOrderedStringIds = Arrays.asList("1003", "64", "26", "152", "15", "television", null, "152", " ");
 
+        expectedResult = Arrays.asList(new Thing(1003), new Thing(152), new Thing(15));
+
     }
 
     @Test
     public void test() {
 
-        List<Thing> expected = Arrays.asList(new Thing(1003), new Thing(152), new Thing(15));
-
         List<Thing> actual = Problem1.joinListsWithStreams(listOfAllThings, listOfOrderedStringIds);
 
-        assertThat(actual, is(expected));
+        assertThat(actual, is(expectedResult));
 
     }
 }
