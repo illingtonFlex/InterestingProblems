@@ -1,6 +1,7 @@
 package jcn.problem1;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class Problem1 {
 
@@ -17,6 +18,15 @@ public class Problem1 {
             Validate this solution by executing the unit test.
          */
 
-        return null;
+        List<Thing> retVal = orderedStringIdList.stream()
+                .filter(id -> thingList.stream().anyMatch(thing -> thing.getId().toString().equals(id)))
+                .map(id -> thingList.stream()
+                        .filter(thing -> thing.getId().toString().equals(id))
+                        .findAny()
+                        .get())
+                .distinct()
+                .collect(Collectors.toList());
+
+        return retVal;
     }
 }

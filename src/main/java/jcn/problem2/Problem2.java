@@ -3,7 +3,11 @@ package jcn.problem2;
 import java.nio.charset.Charset;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
+import java.util.function.Predicate;
+import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 public class Problem2 {
@@ -34,6 +38,15 @@ public class Problem2 {
                 Validate the solution by running the unit test.
 
             */
+
+            retVal = wordStream.filter(hasLengthOfFive)
+                    .filter(this::hasNoDuplicateCharacters)
+                    .filter(word -> word.toUpperCase().endsWith("S") || word.toUpperCase().endsWith("Y"))
+                    .filter(word -> word.toUpperCase().contains("Q"))
+                    .map(String::toUpperCase)
+                    .sorted((o1, o2) -> o1.substring(1).compareToIgnoreCase(o2.substring(1)))
+                    .collect(Collectors.toList());
+
         }
         catch(Exception e)
         {
@@ -41,5 +54,20 @@ public class Problem2 {
         }
 
         return retVal;
+    }
+
+    private Predicate<String> hasLengthOfFive = s -> s.length() == 5;
+
+    private boolean hasNoDuplicateCharacters(String s)
+    {
+        Set<Character> charSet = new HashSet<>();
+
+        for(Character c : s.toCharArray())
+        {
+            if(!charSet.add(c))
+                return false;
+        }
+
+        return true;
     }
 }
