@@ -1,13 +1,15 @@
-package jcn.problem1;
+package jcn.problem1
 
-import java.util.List;
-import java.util.stream.Collectors;
+import java.util.stream.Collectors
+import java.util.stream.Collectors.groupingBy
+import java.util.stream.Stream
 
-public class Problem1 {
-
-    public static List<Thing> joinListsWithStreams(List<Thing> thingList, List<String> orderedStringIdList) {
-
-        /*
+object Problem1 {
+    @JvmStatic
+    fun joinListsWithStreams(
+        thingList: List<Thing>,
+        orderedStringIdList: List<String>
+    ): List<Thing> { /*
             TODO: This method should return a list of distinct Things, which is the union of the two input parameters.
             The orderedStringIdList is an ordered list of IDs, correlating to the ID on the Thing class. The resulting
             list should maintain the order of orderedStringIdList, and only contain Thing objects found in the thingsList
@@ -18,15 +20,17 @@ public class Problem1 {
             Validate this solution by executing the unit test.
          */
 
-        List<Thing> retVal = orderedStringIdList.stream()
-                .filter(id -> thingList.stream().anyMatch(thing -> thing.getId().toString().equals(id)))
-                .map(id -> thingList.stream()
-                        .filter(thing -> thing.getId().toString().equals(id))
-                        .findAny()
-                        .get())
-                .distinct()
-                .collect(Collectors.toList());
-
-        return retVal;
+        return orderedStringIdList.asSequence()
+            .filter { id: String? ->
+                thingList.asSequence()
+                    .any { thing: Thing -> thing.id.toString() == id }
+            }
+            .map { id: String ->
+                thingList.asSequence()
+                    .filter { thing: Thing -> thing.id.toString() == id }
+                    .first()
+            }
+            .distinct()
+            .toList()
     }
 }
